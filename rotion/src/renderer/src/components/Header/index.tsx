@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { Code, CaretDoubleRight, TrashSimple } from 'phosphor-react'
 import * as Breadcrumbs from './Breadcrumbs'
 
-export function Header() {
+export const Header = () => {
   const isMacOS = process.platform === 'darwin'
   const isSidebarOpen = true
 

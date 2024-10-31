@@ -1,6 +1,6 @@
 import { CaretDown, User } from 'phosphor-react'
 
-export function Profile() {
+export const Profile = () => {
   const isAuthenticated = false
 
   if (!isAuthenticated) {

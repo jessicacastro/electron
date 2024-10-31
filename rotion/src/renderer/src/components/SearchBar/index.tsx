@@ -2,7 +2,7 @@ import { Command } from 'cmdk'
 import { File, MagnifyingGlass } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 
-export function SearchBar() {
+export const SearchBar = () => {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {

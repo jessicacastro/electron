@@ -5,7 +5,7 @@ import { CreatePage } from './CreatePage'
 import { Profile } from './Profile'
 import { Search } from './Search'
 
-export function Sidebar() {
+export const Sidebar = () => {
   const isMacOS = process.platform === 'darwin'
 
   return (
