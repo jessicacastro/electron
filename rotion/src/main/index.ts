@@ -3,6 +3,7 @@ import path from 'node:path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { registerRoute } from '../lib/electron-router-dom'
 import './ipc'
+import './store'
 
 function createWindow(): void {
   // Create the browser window.

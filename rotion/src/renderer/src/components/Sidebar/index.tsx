@@ -2,7 +2,7 @@ import * as Navigation from './Navigation'
 import * as Collapsible from '@radix-ui/react-collapsible'
 import clsx from 'clsx'
 import { CaretDoubleLeft } from 'phosphor-react'
-import { CreatePage } from './CreatePage'
+import { NewDocument } from './NewDocument'
 import { Profile } from './Profile'
 import { Search } from './Search'
 import { useQuery } from '@tanstack/react-query'
@@ -18,7 +18,7 @@ export const Sidebar = ({ isSidebarOpen }: SidebarProps) => {
     queryFn: async () => {
       const response = await window.api.fetchDocuments()
 
-      return response
+      return response.data
     },
   })
 
@@ -68,7 +68,7 @@ export const Sidebar = ({ isSidebarOpen }: SidebarProps) => {
           </Navigation.Section>
         </Navigation.Root>
 
-        <CreatePage />
+        <NewDocument />
       </div>
     </Collapsible.Content>
   )
