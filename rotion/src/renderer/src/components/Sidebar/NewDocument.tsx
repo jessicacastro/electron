@@ -1,8 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Plus } from 'phosphor-react'
+import { useNavigate } from 'react-router-dom'
 
 export const NewDocument = () => {
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
+
   const { isPending: isCreatingNewDocument, mutateAsync: createDocument } =
     useMutation({
       mutationFn: async () => {
@@ -20,6 +23,10 @@ export const NewDocument = () => {
         queryClient.setQueryData(['documents'], (documentsList: Document[]) => {
           return [...documentsList, newDocument]
         })
+
+        console.log(newDocument)
+
+        navigate(`/documents/${newDocument.id}`)
       },
     })
 
