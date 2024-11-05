@@ -7,7 +7,11 @@ export type Document = {
 /**
  * Requests (params for each request made in the IPC handlers)
  */
-export type FetchDocumentRequest = Document
+
+// only id of document
+export type FetchDocumentRequest = {
+  id: string
+}
 
 export type DeleteDocumentRequest = {
   id: string

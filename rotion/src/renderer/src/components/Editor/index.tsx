@@ -13,7 +13,11 @@ import Document from '@tiptap/extension-document'
  * -> autofocus: 'end' sets the focus to the end of the editor.
  */
 
-export const Editor = () => {
+type EditorProps = {
+  content: string
+}
+
+export const Editor = ({ content }: EditorProps) => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -30,6 +34,7 @@ export const Editor = () => {
         content: 'heading block*', // Only allow headings and blocks as first level content
       }),
     ],
+    content: content ?? '',
     autofocus: 'end',
     editorProps: {
       attributes: {
