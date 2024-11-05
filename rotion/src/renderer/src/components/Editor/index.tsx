@@ -13,11 +13,17 @@ import Document from '@tiptap/extension-document'
  * -> autofocus: 'end' sets the focus to the end of the editor.
  */
 
-type EditorProps = {
+export type OnContentUpdatedParams = {
+  title: string
   content: string
 }
 
-export const Editor = ({ content }: EditorProps) => {
+type EditorProps = {
+  content: string
+  onContentUpdated: (params: OnContentUpdatedParams) => void
+}
+
+export const Editor = ({ content, onContentUpdated }: EditorProps) => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -40,6 +46,16 @@ export const Editor = ({ content }: EditorProps) => {
       attributes: {
         class: 'focus:outline-none prose prose-invert prose-headings:mt-0',
       },
+    },
+    onUpdate: ({ editor }) => {
+      const contentRegex = /(<h1>(?<title>.+)<\/h1>(?<content>.+)?)/
+
+      const parsedContent = editor.getHTML().match(contentRegex)?.groups
+
+      const title = parsedContent?.title ?? 'Untitled'
+      const content = parsedContent?.content ?? ''
+
+      onContentUpdated({ title, content })
     },
   })
 

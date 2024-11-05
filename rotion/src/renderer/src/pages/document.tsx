@@ -1,10 +1,12 @@
 import { useParams } from 'react-router-dom'
-import { Editor } from '../components/Editor'
+import { Editor, OnContentUpdatedParams } from '../components/Editor'
 import { ToC } from '../components/ToC'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { Document as DocumentType } from '@shared/types/ipc'
 
 export const Document = () => {
+  const queryClient = useQueryClient()
   const { id } = useParams<{ id: string }>()
   const sanitizedId = useMemo(() => id && id.replace(/}$/, ''), [id])
 
@@ -18,6 +20,23 @@ export const Document = () => {
     },
   })
 
+  const { mutateAsync: saveDocument } = useMutation({
+    mutationFn: async ({ content, title }: OnContentUpdatedParams) => {
+      await window.api.saveDocument({ id: sanitizedId!, content, title })
+    },
+    onSuccess: (_, { title }) => {
+      queryClient.setQueryData<DocumentType[]>(['documents'], (documents) => {
+        return documents?.map((document) => {
+          if (document.id === sanitizedId) {
+            return { ...document, title }
+          }
+
+          return document
+        })
+      })
+    },
+  })
+
   const initialContent = useMemo(() => {
     if (data) {
       return `<h1>${data.title}</h1>${data.content ?? '<p></p>'}`
@@ -25,6 +44,13 @@ export const Document = () => {
 
     return ''
   }, [data])
+
+  const handleEditorContentUpdated = ({
+    title,
+    content,
+  }: OnContentUpdatedParams) => {
+    saveDocument({ title, content })
+  }
 
   return (
     <main className="flex-1 flex py-12 px-10 gap-8">
@@ -65,7 +91,12 @@ export const Document = () => {
       </aside>
 
       <section className="flex flex-1 flex-col items-center">
-        {!isFetching && data && <Editor content={initialContent} />}
+        {!isFetching && data && (
+          <Editor
+            onContentUpdated={handleEditorContentUpdated}
+            content={initialContent}
+          />
+        )}
       </section>
     </main>
   )

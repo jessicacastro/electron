@@ -24,8 +24,6 @@ export const NewDocument = () => {
           return [...documentsList, newDocument]
         })
 
-        console.log(newDocument)
-
         navigate(`/documents/${newDocument.id}`)
       },
     })
