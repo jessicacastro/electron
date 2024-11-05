@@ -33,3 +33,5 @@ export type FetchDocumentResponse = {
 export type CreateDocumentResponse = {
   data: Document
 }
+
+export type OnNewDocumentRequest = () => void
