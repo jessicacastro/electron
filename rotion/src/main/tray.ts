@@ -14,6 +14,8 @@ export const createTray = (window: BrowserWindow) => {
     {
       label: 'Criar novo documento',
       click: () => window.webContents.send(IPC.DOCUMENTS.CREATE),
+      accelerator: 'CmdOrCtrl+N',
+      acceleratorWorksWhenHidden: false,
     },
     { type: 'separator' },
     { label: 'Documentos recentes', enabled: false },
