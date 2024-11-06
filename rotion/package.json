@@ -1,11 +1,15 @@
 {
   "name": "rotion",
   "productName": "Rotion",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A Notion alternative written with Electron and Typescript",
   "main": "./out/main/index.js",
   "author": "dev.jessicacastro",
   "homepage": "https://jessicacastro.dev/rotion",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jessicacastro/electron/tree/main/rotion"
+  },
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
