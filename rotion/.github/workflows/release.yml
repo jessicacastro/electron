@@ -1,0 +1,45 @@
+on:
+  push:
+    tags: ["*"]
+
+jobs:
+  release:
+    # Only run this job on tags that start with "v" (e.g. "v1.2.3")
+    if: startsWith(github.ref, 'refs/tags/v')
+    # Run this job on all supported operating systems
+    runs-on: ${{ matrix.os }}
+
+    # Define the matrix of operating systems
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      - name: apt-update
+        # Only run this step on Ubuntu
+        if: startsWith(matrix.os, 'ubuntu-latest')
+        run: sudo apt-get update
+
+      - name: autoremove
+        if: startsWith(matrix.os, 'ubuntu-latest')
+        run: sudo apt autoremove
+
+      - name: Install libarchive rpm on Linux
+        # Only run this step on Ubuntu
+        if: startsWith(matrix.os, 'ubuntu-latest')
+        run: sudo apt-get install libarchive-tools rpm
+
+      - name: Release Electron app
+        # Use the action-electron-builder action to build and release the Electron app
+        uses: samuelmeuli/action-electron-builder@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          release: true
