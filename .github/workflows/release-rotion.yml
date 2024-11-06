@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     defaults:
       run:
-        working-directory: ./electron/rotion
+        working-directory: /rotion
 
     # Define the matrix of operating systems
     strategy:
