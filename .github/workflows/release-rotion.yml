@@ -13,7 +13,7 @@ jobs:
     defaults:
       run:
         # Use the `rotion` folder as the working directory
-        working-directory: rotion
+        working-directory: ./rotion
 
     # Define the matrix of operating systems
     strategy:
